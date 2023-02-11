@@ -19,7 +19,7 @@
     {
       "matches": ["*://*/*"],
       "css": ["main.css"],
-      "js": ["scripts/popup.js"]
+      "js": ["scripts/content.js"]
     }
   ],
   "background": {
@@ -32,6 +32,4 @@
     "tabs",
     "scripting"
   ]
-  
-  
 }
