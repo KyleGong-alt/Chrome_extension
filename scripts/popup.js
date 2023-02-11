@@ -1,6 +1,6 @@
 if (typeof init === 'undefined') {
   const init = function () {
-    console.log('Start');
+    console.log('RUN POPUP');
     let [milliseconds, seconds, minutes, hours] = [0, 0, 0, 0];
     let timerRef = document.querySelector('.timerDisplay');
     let int = 0;
