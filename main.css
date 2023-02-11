@@ -1,0 +1,26 @@
+/* html body {
+    background: url(https://t3.ftcdn.net/jpg/05/12/57/32/360_F_512573214_dBpqh7vLvjkQJpXCdXIyKrrPBDHrmbui.jpg);
+} */
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+    height: auto;
+    width: 100%;
+}
+
+.timerDisplay{
+    display: flex;
+    /* flex-wrap: wrap; */
+    width: 280px;
+    height: 50px;
+    /* position: auto; */
+    background: #ffffff;
+    /* left: 4%; */
+    padding: 10px 0;
+    color: rgba(11, 13, 183, 0.82);
+    font-size: 40px;
+    /* border-radius: 5px; */
+}
+

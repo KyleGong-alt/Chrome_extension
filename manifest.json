@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Productivity Time",
+  "description": "Trying to create an extension",
+  "version": "1.0",
+  "host_permissions": ["<all_urls>"],
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "action": {
+    "defualt_icon": "images/icon128.png",
+    "default_popup": "popup.html",
+    "default_title": "Start of something special"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "css": ["main.css"],
+      "js": ["scripts/popup.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/backgrounds.js"
+  },
+  "permissions": [
+    "declarativeContent",
+    "activeTab",
+    "nativeMessaging",
+    "tabs",
+    "scripting"
+  ]
+  
+  
+}
