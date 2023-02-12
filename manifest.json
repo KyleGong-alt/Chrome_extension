@@ -32,5 +32,13 @@
     "tabs",
     "scripting",
     "storage"
-  ]
+  ],
+  "applications": {
+    "chrome": {
+      "extensions": {}
+    },
+    "opera": {
+      "extensions": {}
+    }
+  }
 }

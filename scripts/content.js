@@ -57,7 +57,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 chrome.tabs.onActivated.addListener(function (activeInfo) {
   let startTime = sessionStorage.getItem(activeInfo.tabId);
-  console.log(startTime);
   let difference = Date.now() - startTime;
   console.log('time elapsed', difference);
 });
