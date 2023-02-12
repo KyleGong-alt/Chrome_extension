@@ -30,6 +30,7 @@
     "activeTab",
     "nativeMessaging",
     "tabs",
-    "scripting"
+    "scripting",
+    "storage"
   ]
 }

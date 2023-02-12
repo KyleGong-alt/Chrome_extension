@@ -1,46 +1,6 @@
-// try {
-//   chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-//     if (changeInfo.status === 'complete') {
-//       console.log('start the timer');
-//       chrome.tabs.executeScript({
-//         file: 'scripts/popup.js',
-//         runAt: 'document_end',
-//         allFrames: false,
-//       });
-//     }
-//   });
-// } catch (e) {
-//   console.log(e);
-// }
-
-// try {
-//   chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-//     if (changeInfo.status === 'complete') {
-//       // get the current time
-//       var currentTime = new Date().getTime();
-//       // send the current time to the content script
-//       console.log('sending message', tabId, changeInfo, tab);
-//       chrome.tabs.sendMessage(tab.id, {
-//         type: 'start_timer',
-//         time: currentTime,
-//       });
-//     }
-//   });
-
-//   // chrome.browserAction.onClicked.addListener(function (tab) {
-//   //   chrome.tabs.sendMessage(tab.id, { type: 'get_timer' }, function (response) {
-//   //     // update the popup window with the elapsed time
-//   //     console.log('Elapsed time: ' + response.elapsedTime);
-//   //   });
-//   // });
-// } catch (e) {
-//   console.log(e);
-// }
-// let bool = 0;
-
 let start_timer;
 let difference;
-let now_timer;
+let end_timer;
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status === 'complete') {
     start_timer = Date.now();
@@ -56,8 +16,8 @@ chrome.action.onClicked.addListener(async (tab) => {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === 'update_timer') {
-    now_timer = Date.now();
-    difference = now_timer - start_timer;
+    end_timer = Date.now();
+    difference = end_timer - start_timer;
     chrome.runtime.sendMessage({
       message: 'update_timer_content',
       time: difference,
@@ -65,13 +25,26 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 
   if (request.message === 'reset_timer') {
-    now_timer = Date.now();
     start_timer = Date.now();
+    end_timer = Date.now();
+    difference = end_timer - start_timer;
     chrome.runtime.sendMessage({
-      message: 'update_timer_content',
-      time: 0,
+      message: 'reset_timer_content',
+      time: difference,
     });
   }
+
+  // if (request.message === 'start_timer') {
+  //   chrome.runtime.sendMessage({
+  //     message: 'start_timer_content',
+  //   });
+  // }
+
+  // if (request.message === 'pause_timer') {
+  //   chrome.runtime.sendMessage({
+  //     message: 'pause_timer_content',
+  //   });
+  // }
 });
 
 // chrome.action.onClicked.addListener(async (tab) => {
