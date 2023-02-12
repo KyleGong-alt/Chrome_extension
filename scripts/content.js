@@ -7,13 +7,6 @@
 
 //     int = setInterval(displayTimer, 10);
 
-//     document.getElementById('resetTimer').addEventListener('click', () => {
-//       clearInterval(int); // Stops the timer
-//       [milliseconds, seconds, minutes, hours] = [0, 0, 0, 0]; // reinitalizes the elements created
-//       timerRef.textContent = '00h : 00m : 00s'; // sets the timer back to 0
-//       int = setInterval(displayTimer, 10);
-//     });
-
 //     function displayTimer() {
 //       milliseconds += 10;
 //       if (milliseconds == 1000) {
@@ -37,16 +30,8 @@
 //   };
 //   init();
 // }
-
-// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-//   if (request.type === 'get_timer') {
-//     var currentTime = new Date().getTime();
-//     var elapsedTime = currentTime - startTime;
-//     sendResponse({ elapsedTime: elapsedTime });
-//   }
-// });
-
-let viewTime;
+let timerRef = document.querySelector('.timerDisplay');
+let [hours, minutes, seconds] = [0, 0, 0];
 
 chrome.runtime.sendMessage({
   message: 'update_timer',
@@ -55,26 +40,20 @@ chrome.runtime.sendMessage({
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === 'update_timer_content') {
     console.log('time', request.time);
-    viewTime = request.time; //Gets the time in milliseconds
+    // displayTimer(request.time);
+    displayTimer(request.time);
   }
 });
 
-// if (typeof init === 'undefined') {
-//   const init = function () {
-//   };
-//   init();
-// }
-displayTimer(77777777);
+document.getElementById('resetTimer').addEventListener('click', () => {
+  chrome.runtime.sendMessage({
+    message: 'reset_timer',
+  });
+});
 
 function displayTimer(milliseconds) {
-  let hours,
-    minutes,
-    seconds,
-    hourRem,
-    minutesRem,
-    secondsRem = [0, 0, 0, 0, 0, 0];
+  console.log(hours, minutes);
   seconds = milliseconds / 1000;
-  secondsRem = milliseconds % 1000;
   if (seconds > 60) {
     minutes = seconds / 60;
     seconds = seconds - 60 * Math.floor(minutes);
@@ -83,5 +62,19 @@ function displayTimer(milliseconds) {
       minutes = minutes - 60 * Math.floor(hours);
     }
   }
-  console.log('hours', hours, minutes, seconds, secondsRem);
+  console.log(hours, minutes);
+
+  (hours = Math.floor(hours)),
+    (minutes = Math.floor(minutes)),
+    (seconds = Math.floor(seconds));
+
+  let h = hours < 10 ? '0' + hours : hours;
+  let m = minutes < 10 ? '0' + minutes : minutes;
+  let s = seconds < 10 ? '0' + seconds : seconds;
+
+  h < 1 ? (h = '00') : h;
+  m < 1 ? (m = '00') : m;
+
+  timerRef.textContent = `${h}h : ${m}m : ${s}s`;
+  // return hours, minutes, seconds;
 }

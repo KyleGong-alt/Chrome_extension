@@ -40,9 +40,9 @@
 
 let start_timer;
 let difference;
+let now_timer;
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status === 'complete') {
-    console.log('page loaded');
     start_timer = Date.now();
   }
 });
@@ -56,15 +56,20 @@ chrome.action.onClicked.addListener(async (tab) => {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === 'update_timer') {
-    console.log('update timer');
-
-    let now_timer = Date.now();
-    // console.log(start_timer, now_timer);
+    now_timer = Date.now();
     difference = now_timer - start_timer;
-    // console.log(difference);
     chrome.runtime.sendMessage({
       message: 'update_timer_content',
       time: difference,
+    });
+  }
+
+  if (request.message === 'reset_timer') {
+    now_timer = Date.now();
+    start_timer = Date.now();
+    chrome.runtime.sendMessage({
+      message: 'update_timer_content',
+      time: 0,
     });
   }
 });
