@@ -1,6 +1,7 @@
 let start_timer;
 let difference;
 let end_timer;
+
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status === 'complete') {
     start_timer = Date.now();
@@ -22,6 +23,12 @@ chrome.action.onClicked.addListener(async (tab) => {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === 'update_timer') {
+    // function gotBrowserInfo(info) {
+    //   console.log(info.name);
+    // }
+
+    // let gettingInfo = browser.runtime.getBrowserInfo();
+    // gettingInfo.then(gotBrowserInfo);
     getActiveTabAndUpdateTimer();
   }
   function getActiveTabAndUpdateTimer() {

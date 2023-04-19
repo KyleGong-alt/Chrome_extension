@@ -3,24 +3,23 @@
 } */
 
 .buttons {
-    display: flex;
-    flex-direction: column;
-    /* justify-content: space-around; */
-    height: auto;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-around; */
+  height: auto;
+  width: 100%;
 }
 
-.timerDisplay{
-    display: flex;
-    /* flex-wrap: wrap; */
-    width: 280px;
-    height: 50px;
-    /* position: auto; */
-    background: #ffffff;
-    /* left: 4%; */
-    padding: 10px 0;
-    color: rgba(11, 13, 183, 0.82);
-    font-size: 40px;
-    /* border-radius: 5px; */
+.timerDisplay {
+  display: flex;
+  /* flex-wrap: wrap; */
+  width: 280px;
+  height: 50px;
+  /* position: auto; */
+  background: #ffffff;
+  /* left: 4%; */
+  padding: 10px 0;
+  color: rgba(11, 13, 183, 0.82);
+  font-size: 40px;
+  /* border-radius: 5px; */
 }
-

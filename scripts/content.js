@@ -73,11 +73,11 @@ chrome.tabs.onActivated.addListener(function (activeInfo) {
 //   });
 // });
 
-document.getElementById('resetTimer').addEventListener('click', () => {
-  chrome.runtime.sendMessage({
-    message: 'reset_timer',
-  });
-});
+// document.getElementById('resetTimer').addEventListener('click', () => {
+//   chrome.runtime.sendMessage({
+//     message: 'reset_timer',
+//   });
+// });
 
 function displayTimer(milliseconds) {
   let copy_of_mil = milliseconds;
