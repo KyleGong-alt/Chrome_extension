@@ -23,38 +23,33 @@ chrome.action.onClicked.addListener(async (tab) => {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === 'update_timer') {
-    // function gotBrowserInfo(info) {
-    //   console.log(info.name);
-    // }
-
-    // let gettingInfo = browser.runtime.getBrowserInfo();
-    // gettingInfo.then(gotBrowserInfo);
+    console.log('updating timer in background request message sent');
     getActiveTabAndUpdateTimer();
   }
-  function getActiveTabAndUpdateTimer() {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      if (tabs.length === 0) {
-        console.error('No active tab found');
+});
+function getActiveTabAndUpdateTimer() {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    if (tabs.length === 0) {
+      console.error('No active tab found');
+      return;
+    }
+    let activeTab = tabs[0];
+    console.log('Active Tab ID:', activeTab.id);
+    chrome.storage.local.get([activeTab.id.toString()], function (result) {
+      if (!result[activeTab.id]) {
+        console.error('Key not found in local storage');
         return;
       }
-      let activeTab = tabs[0];
-      console.log('Active Tab ID:', activeTab.id);
-      chrome.storage.local.get([activeTab.id.toString()], function (result) {
-        if (!result[activeTab.id]) {
-          console.error('Key not found in local storage');
-          return;
-        }
-        let new_start_timer = result[activeTab.id];
-        let difference = Date.now() - new_start_timer;
-        console.log('Difference of stored:', difference);
-        chrome.runtime.sendMessage({
-          message: 'update_timer_content',
-          time: difference,
-        });
+      let new_start_timer = result[activeTab.id];
+      let difference = Date.now() - new_start_timer;
+      console.log('Difference of stored:', difference);
+      chrome.runtime.sendMessage({
+        message: 'update_timer_content',
+        time: difference,
       });
     });
-  }
-});
+  });
+}
 
 // if (request.message === 'reset_timer') {
 //   start_timer = Date.now();

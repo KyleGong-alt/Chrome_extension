@@ -30,6 +30,7 @@
 //   };
 //   init();
 // }
+
 let timerRef = document.querySelector('.timerDisplay');
 let [hours, minutes, seconds, millisec] = [0, 0, 0, 0];
 let intervalID;
@@ -46,15 +47,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   } else if (request.message === 'reset_timer_content') {
     clearInterval(intervalID);
     displayTimer(0);
+  } else if (request.message === 'pause_timer_content') {
+    clearInterval(intervalID);
+    console.log('pausingTimer');
   }
   // else if (request.message === 'start_timer_content') {
   //   displayTimer(request.time);
-  // } else if (request.message === 'pause_timer_content') {
-  //   clearInterval(intervalID);
   // }
 });
 
 chrome.tabs.onActivated.addListener(function (activeInfo) {
+  // When tab is run
   let startTime = sessionStorage.getItem(activeInfo.tabId);
   let difference = Date.now() - startTime;
   console.log('time elapsed', difference);
